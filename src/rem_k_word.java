@@ -1,3 +1,4 @@
+
 import java.util.*;
 public class rem_k_word
 {
@@ -8,7 +9,7 @@ public class rem_k_word
         String[] b=a.split(" ");
         String key = obj.next();
         char[] d = key.toCharArray();
-        int count=0;
+        int count;
         for (String s : b) {
             count = 0;
             char[] c = s.toCharArray();
