@@ -19,5 +19,35 @@ public class gcd {
         if (b == 0)
             return a;
         return findGCD(b, a % b);
+    }/*
+    "Array"
+
+    static int gcd(int a, int b)
+    {
+        if (a == 0)
+            return b;
+        return gcd(b % a, a);
     }
+    static int findGCD(int arr[], int n)
+    {
+        int result = arr[0];
+        for (int element: arr){
+            result = gcd(result, element);
+            if(result == 1)
+            {
+                return 1;
+            }
+        }
+        return result;
+    }
+    public static void main(String[] args)
+    {
+        Scanner s = new Scanner(System.in);
+        int n = s.nextInt();
+        int[] num = new int[n];
+        for(int i=0;i<n;i++){
+            num[i] = s.nextInt();
+        }
+        System.out.println(findGCD(num, n));
+    }*/
 }
