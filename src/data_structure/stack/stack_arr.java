@@ -2,7 +2,6 @@ package data_structure.stack;
 
 import java.util.Scanner;
 
-//stack using array
 public class stack_arr {
     int[] arr;
     int top;
