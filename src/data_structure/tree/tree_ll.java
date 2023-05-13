@@ -1,6 +1,6 @@
 package data_structure.tree;
 
-import java.util.Scanner;
+import java.util.*;
 
 class Node{
     int data;
@@ -91,6 +91,81 @@ public class tree_ll {
                 return rheight+1;
         }
     }
+
+    public int sub_height(Node temp, int key){
+        if(temp == null)
+            return 0;
+        else if(temp.data == key){
+            return height(temp);
+        }
+        else{
+            if(temp.data > key){
+                return sub_height(temp.left,key);
+            }
+            else{
+                return sub_height(temp.right,key);
+            }
+        }
+    }
+
+    public void deleteKey(int key){
+        root = delete(root,key);
+    }
+
+    public Node delete(Node temp, int key){
+        int val;
+        if(temp == null){
+            return null;
+        }
+        if(key < temp.data){
+            temp.left = delete(temp.left,key);
+            val = temp.left.data;
+        }
+        else if(key > temp.data){
+            temp.right = delete(temp.right,key);
+            val = temp.right.data;
+        }
+        else{
+            if(temp.left == null){
+                val = temp.right.data;
+                return temp.right;
+            }
+            else if(temp.right == null){
+                val = temp.left.data;
+                return temp.left;
+            }
+            temp.data = Math.toIntExact(minValue(temp.right));
+            val = temp.data;
+            temp.right = delete(temp.right,temp.data);
+            val = temp.right.data;
+        }
+        return temp;
+    }
+
+    int minValue(Node root)
+    {
+        int minv = root.data;
+        while (root.left != null) {
+            minv = root.left.data;
+            root = root.left;
+        }
+        return minv;
+    }
+
+    public Node llm(Node temp, int val1, int val2){
+        if(temp == null){
+            return null;
+        }
+        if(temp.data > val1 && temp.data > val2){
+            return llm(temp.left,val1,val2);
+        }
+        if(temp.data < val1 && temp.data < val2){
+            return llm(temp.right,val1,val2);
+        }
+        return temp;
+
+    }
+
     public static void main(String[] args){
         Scanner s = new Scanner(System.in);
         tree_ll obj = new tree_ll();
@@ -99,6 +174,8 @@ public class tree_ll {
             obj.insert(i);
         }
         Node temp = obj.root;
+        //int height = obj.height(temp);
+        /*System.out.println(height);
         System.out.print("Preorder: ");
         obj.preorder(temp);
         System.out.print("\nPostorder: ");
@@ -108,5 +185,20 @@ public class tree_ll {
 
         obj.search(temp,2);
         System.out.println("\n"+obj.height(temp));
+        System.out.println("Enter element to delete");
+        int key = s.nextInt();
+        obj.deleteKey(key);
+        System.out.print("Preorder: ");
+        obj.preorder(temp);
+        System.out.println("Enter the elements to find common ancestor");
+        int val1 = s.nextInt();
+        int val2 = s.nextInt();
+        Node t = obj.root;
+        t = obj.llm(t,val1,val2);
+        System.out.println("The common ancestor of "+val1+" and "+val2+" is "+t.data);*/
+
+        System.out.println("Enter the node to return height:");
+        int no = s.nextInt();
+        System.out.println(obj.sub_height(temp,no));
     }
 }
