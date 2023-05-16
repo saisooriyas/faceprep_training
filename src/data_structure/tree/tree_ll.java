@@ -15,8 +15,10 @@ public class tree_ll {
     Node root;
     public void insert(int d){
         Node t = new Node(d);
-        if(root == null)
+        if(root == null) {
             root = t;
+            System.out.println("Element inserted");
+        }
         else{
             Node temp = root;
             while(true){
@@ -35,6 +37,7 @@ public class tree_ll {
                     temp = temp.left;
                 }
             }
+            System.out.println("Element inserted");
         }
     }
 
@@ -55,8 +58,10 @@ public class tree_ll {
     }
 
     public void inorder(Node temp){
-        if(temp == null)
+        if(temp == null) {
+            System.out.println("Empty");
             return;
+        }
         inorder(temp.left);
         System.out.print(temp.data);
         inorder(temp.right);
@@ -81,9 +86,7 @@ public class tree_ll {
         if(temp == null)
             return 0;
         else{
-            int ls = temp.data;
             int lheight = height(temp.left);
-            int rs = temp.data;
             int rheight = height(temp.right);
             if(lheight>rheight)
                 return lheight+1;
@@ -113,31 +116,27 @@ public class tree_ll {
     }
 
     public Node delete(Node temp, int key){
-        int val;
         if(temp == null){
             return null;
         }
         if(key < temp.data){
             temp.left = delete(temp.left,key);
-            val = temp.left.data;
         }
         else if(key > temp.data){
             temp.right = delete(temp.right,key);
-            val = temp.right.data;
         }
         else{
             if(temp.left == null){
-                val = temp.right.data;
+                if(temp.right == null){
+                    return null;
+                }
                 return temp.right;
             }
             else if(temp.right == null){
-                val = temp.left.data;
                 return temp.left;
             }
             temp.data = Math.toIntExact(minValue(temp.right));
-            val = temp.data;
             temp.right = delete(temp.right,temp.data);
-            val = temp.right.data;
         }
         return temp;
     }
@@ -169,36 +168,46 @@ public class tree_ll {
     public static void main(String[] args){
         Scanner s = new Scanner(System.in);
         tree_ll obj = new tree_ll();
-        int[] arr = {3,4,8,7,6,1,2};
-        for(int i : arr){
-            obj.insert(i);
-        }
-        Node temp = obj.root;
-        //int height = obj.height(temp);
-        /*System.out.println(height);
-        System.out.print("Preorder: ");
-        obj.preorder(temp);
-        System.out.print("\nPostorder: ");
-        obj.postorder(temp);
-        System.out.print("\nInorder: ");
-        obj.inorder(temp);
+        int ch,val,val2,height;
+        do{
+            System.out.println("\n1.Insert\n2.Delete\n3.height of subtree\n4.height of tree\n5.Inorder\n6.Search\n7.llm\n0.Exit");
+            System.out.println("\nEnter the choice");
+            ch = s.nextInt();
+            switch (ch){
+                case 1:
+                    System.out.println("Enter element to insert:");
+                    val = s.nextInt();
+                    obj.insert(val);
+                    break;
+                case 2:
+                    System.out.println("Enter delete element");
+                    val = s.nextInt();
+                    obj.deleteKey(val);
+                    break;
+                case 3:
+                    System.out.println("Enter the node to see height");
+                    val = s.nextInt();
+                    height = obj.sub_height(obj.root,val);
+                    System.out.println(height);
+                    break;
+                case 4:
+                    height = obj.height(obj.root);
+                    System.out.println(height);
+                    break;
+                case 5:
+                    obj.inorder(obj.root);
+                    break;
+                case 6:
+                    System.out.println("Enter the element to search");
+                    val = s.nextInt();
+                    obj.search(obj.root,val);
+                case 7:
+                    System.out.println("Enter the two elements");
+                    val = s.nextInt();
+                    val2 = s.nextInt();
+                    Node temp = obj.llm(obj.root,val,val2);
 
-        obj.search(temp,2);
-        System.out.println("\n"+obj.height(temp));
-        System.out.println("Enter element to delete");
-        int key = s.nextInt();
-        obj.deleteKey(key);
-        System.out.print("Preorder: ");
-        obj.preorder(temp);
-        System.out.println("Enter the elements to find common ancestor");
-        int val1 = s.nextInt();
-        int val2 = s.nextInt();
-        Node t = obj.root;
-        t = obj.llm(t,val1,val2);
-        System.out.println("The common ancestor of "+val1+" and "+val2+" is "+t.data);*/
-
-        System.out.println("Enter the node to return height:");
-        int no = s.nextInt();
-        System.out.println(obj.sub_height(temp,no));
+            }
+        }while(ch!=0);
     }
 }
